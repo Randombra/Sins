@@ -17,6 +17,7 @@ local Whitelist = {
 	8620273462,
 	7665397612,
 	8028260818,
+	4629904219,
 }
 
 local LilJimmy_URL = "https://raw.githubusercontent.com/ScriptCons/Loader/refs/heads/main/Scripts/jimmy.png" 
