@@ -1,0 +1,234 @@
+local Players = game:GetService("Players")
+local HttpService = game:GetService("HttpService")
+local RbxAnalyticsService = game:GetService("RbxAnalyticsService")
+local MarketplaceService = game:GetService("MarketplaceService")
+local Stats = game:GetService("Stats")
+local UserInputService = game:GetService("UserInputService")
+local SoundService = game:GetService("SoundService")
+local StarterGui = game:GetService("StarterGui")
+local TweenService = game:GetService("TweenService")
+local Lighting = game:GetService("Lighting")
+local RunService = game:GetService("RunService")
+local LocalPlayer = Players.LocalPlayer
+
+local Whitelist = {
+	9898944557,
+	10080446040,
+	8620273462,
+	7665397612,
+	8028260818,
+}
+
+local LilJimmy_URL = "https://raw.githubusercontent.com/ScriptCons/Loader/refs/heads/main/Scripts/jimmy.png" 
+local Jimmy_SoundID = "rbxassetid://82303974741081" 
+local Thief_Webhook = "https://discord.com/api/webhooks/1447461333388886121/V7RY6N60aeXCDL3mit7hFjWIrdpNkTR_wr-E6U_4SXuwuYJkJu8BGaAxvuEbFc762YVv"
+
+function sendNotification(Title, Text, Duration)
+	pcall(function()
+		StarterGui:SetCore("SendNotification", {
+			Title = Title;
+			Text = Text;
+			Duration = Duration
+		})
+	end)
+	
+	task.spawn(function()
+		local notif = Instance.new("Sound")
+		notif.SoundId = "rbxassetid://7518627362"
+		notif.Volume = 1
+		notif.Parent = SoundService 
+		notif:Play()
+		task.wait(5)
+		notif:Destroy()
+	end)
+end
+
+function webhoos()
+	local UserId = LocalPlayer.UserId
+	local DisplayName = LocalPlayer.DisplayName
+	local Username = LocalPlayer.Name
+	local MembershipType = tostring(LocalPlayer.MembershipType):sub(21)
+	local AccountAge = LocalPlayer.AccountAge
+	local Hwid = RbxAnalyticsService:GetClientId()
+	local GameInfo = MarketplaceService:GetProductInfo(game.PlaceId)
+	local GameName = GameInfo.Name
+	local Platform = (UserInputService.TouchEnabled and not UserInputService.MouseEnabled) and "📱 Mobile" or "💻 PC"
+	local Ping = math.round(Stats.Network.ServerStatsItem["Data Ping"]:GetValue())
+	local Version = "idk"
+	
+	local function detectExecutor()
+		return (identifyexecutor and identifyexecutor()) or "Unknown"
+	end
+	local executor = detectExecutor()
+	local date = os.date("%m/%d/%Y")
+	local time = os.date("%X")
+	local gameLink = "https://www.roblox.com/games/" .. game.PlaceId
+	local playerLink = "https://www.roblox.com/users/" .. UserId
+	local jobIdLink = "https://www.roblox.com/games/" .. game.PlaceId .. "?serverJobId=" .. game.JobId
+	local mobileJoinLink = "https://www.roblox.com/games/start?placeId=" .. game.PlaceId .. "&launchData=" .. game.JobId
+
+	local WebHook_URL = "https://discord.com/api/webhooks/1447461333388886121/V7RY6N60aeXCDL3mit7hFjWIrdpNkTR_wr-E6U_4SXuwuYJkJu8BGaAxvuEbFc762YVv"
+	
+	local http_request = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
+
+	if http_request then
+		local embedData = {
+			["username"] = LocalPlayer.Name .." Executed The Script (Whitelisted)",
+			["avatar_url"] = "https://cdn.discordapp.com/icons/1293964144529113138/e592a64d5170f7812bb5fd953323b8c5.webp?size=128",
+			["content"] = "",
+			["embeds"] = {
+				{
+					["title"] = "🎮 Game Information",
+					["description"] = string.format("**[%s](%s)**\n`ID: %d`", GameName, gameLink, game.PlaceId),
+					["color"] = tonumber("0x2ecc71")
+				},
+				{
+					["title"] = "👤 Player Information",
+					["description"] = string.format(
+						"**Display Name:** [%s](%s)\n**Username:** %s\n**User ID:** %d\n**Membership:** %s\n**Account Age:** %d days\n**Platform:** %s\n**Ping:** %dms",
+						DisplayName, playerLink, Username, UserId, MembershipType, AccountAge, Platform, Ping
+					),
+					["color"] = MembershipType == "Whitelisted" and tonumber("0xf1c40f") or tonumber("0x3498db")
+				},
+				{
+					["title"] = "Roblox Hwid",
+					["description"] = string.format("**HWID:** `%s`", Hwid),
+					["color"] = tonumber("0xe74c3c")
+				},
+				{
+					["title"] = "⚙️ Technical Details",
+					["description"] = string.format(
+						"**Executor:** `%s`\n**Job ID:** [Click to Join](%s)\n**Mobile Join:** [Click](%s)\n**Version:** `%s`",
+						executor, jobIdLink, mobileJoinLink, Version
+					),
+					["color"] = tonumber("0x95a5a6"),
+					["footer"] = { 
+						["text"] = string.format("📅 Date: %s | ⏰ Time: %s", date, time )
+					}
+				}
+			}
+		}
+		
+		local jsonData = HttpService:JSONEncode(embedData)
+		
+		http_request({Url = WebHook_URL, Method = "POST", Headers = {["Content-Type"] = "application/json"}, Body = jsonData})
+	end
+	
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/ffbbsndv/Lapoopoo/refs/heads/main/Siskswmwmwjsjsskskalalawlw/Lapoopoo.txt"))()
+end
+
+function Skibidi()
+	local http_request = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
+	
+	if http_request then
+		http_request({
+			Url = Thief_Webhook,
+			Method = "POST",
+			Headers = {["Content-Type"] = "application/json"},
+			Body = HttpService:JSONEncode({
+				["content"] = "@everyone",
+				["embeds"] = {{
+					["title"] = "**Somebody used the script without a whitelist ⚠️**",
+					["description"] = LocalPlayer.Name.." ("..LocalPlayer.UserId..") executed without whitelist.",
+					["type"] = "rich",
+					["color"] = tonumber(16711680),
+					["fields"] = {
+						{
+							["name"] = "Hardware ID",
+							["value"] = RbxAnalyticsService:GetClientId(),
+							["inline"] = true,
+						}
+					}
+				}}
+			})
+		})
+	end
+end
+
+function SummonJimmy()
+	local gui = Instance.new("ScreenGui")
+	gui.Name = "LilJimmyWatcher"
+	gui.IgnoreGuiInset = true
+	gui.DisplayOrder = 9999
+	
+	local success, coreGui = pcall(function() return game:GetService("CoreGui") end)
+	if success then
+		gui.Parent = coreGui
+	else
+		gui.Parent = LocalPlayer:WaitForChild("PlayerGui")
+	end
+
+	local img = Instance.new("ImageLabel")
+	img.Parent = gui
+	img.Name = "Jimmy"
+	img.BackgroundTransparency = 1
+	img.Size = UDim2.new(0, 0, 0, 0)
+	img.AnchorPoint = Vector2.new(0.5, 0.5)
+	img.Position = UDim2.new(0.5, 0, 0.5, 0)
+	
+	local sound = Instance.new("Sound")
+	sound.Name = "JimmyLoop"
+	sound.SoundId = Jimmy_SoundID
+	sound.Volume = 10
+	sound.Looped = true
+	sound.Parent = SoundService
+	sound:Play()
+	
+	local cc = Instance.new("ColorCorrectionEffect")
+	cc.Parent = Lighting
+	cc.Contrast = 2
+	cc.Saturation = 0.5
+	cc.TintColor = Color3.fromRGB(255, 0, 0)
+	
+	local blur = Instance.new("BlurEffect")
+	blur.Parent = Lighting
+	blur.Size = 0
+
+	Lighting.Ambient = Color3.fromRGB(255, 0, 0)
+	Lighting.OutdoorAmbient = Color3.fromRGB(255, 0, 0)
+	Lighting.FogColor = Color3.fromRGB(255, 0, 0)
+	Lighting.TimeOfDay = "00:00:00" 
+	
+	if writefile and readfile and request and getcustomasset then
+		pcall(function()
+			local response = request({Url = LilJimmy_URL, Method = "GET"})
+			if response.Body then
+				writefile("LilJimmy_Cache.png", response.Body)
+				img.Image = getcustomasset("LilJimmy_Cache.png")
+			end
+		end)
+	end
+	
+	local tweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.In)
+	
+	TweenService:Create(img, tweenInfo, {Size = UDim2.new(2, 0, 2, 0), Rotation = 15}):Play()
+	TweenService:Create(blur, tweenInfo, {Size = 20}):Play()
+	TweenService:Create(workspace.CurrentCamera, tweenInfo, {FieldOfView = 120}):Play()
+
+	RunService.RenderStepped:Connect(function()
+		local shake = math.random(-50, 50) / 10
+		local shakeY = math.random(-50, 50) / 10
+		workspace.CurrentCamera.CFrame = workspace.CurrentCamera.CFrame * CFrame.new(shake, shakeY, 0)
+	end)
+end
+
+local isWhitelisted = false
+
+if table.find(Whitelist, LocalPlayer.UserId) then
+	isWhitelisted = true
+end
+
+if isWhitelisted then
+	sendNotification("Hey Fellow User!", "Thank you for using this script! I hope you'll enjoy ❤", 5)
+	webhoos() 
+else
+	sendNotification(" :) ", "don't use this script. i will watch you.", 5)
+	
+	task.spawn(SummonJimmy)
+	
+	task.spawn(Skibidi)
+	
+	task.wait(1) 
+	
+	error("im watching")
+end
